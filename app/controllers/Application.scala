@@ -32,7 +32,7 @@ class Application extends Controller {
   }
   
   def login = Action {
-    Ok(views.html.index(taskForm,"Please login",boolog))
+    Ok(views.html.index(taskForm,"",boolog))
   }
   
   def page = Action.apply { request =>

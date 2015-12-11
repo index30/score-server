@@ -1,4 +1,7 @@
-This is your new Play application
-=================================
+Score-server
+====
 
-This file will be packaged with your application, when using `activator dist`.
+Overview
+
+## Description
+This is score-server for ctf.
