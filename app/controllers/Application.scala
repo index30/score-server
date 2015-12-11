@@ -35,8 +35,13 @@ class Application extends Controller {
     Ok(views.html.index(taskForm,"Please login"))
   }
   
-  def page = Action {
-    Ok(views.html.index(taskForm,"Welcome!"))
+  def page = Action.apply { request =>
+    request.session.get("connect").map{ user =>
+      Ok(views.html.index(taskForm,"Welcome!"))
+       
+    }getOrElse{
+      Ok(views.html.index(taskForm,"Please login again."))
+    }
   }
   
   def badpage = Action {
@@ -45,19 +50,19 @@ class Application extends Controller {
     
   def logAuth() = Action { implicit req =>
     taskForm.bindFromRequest.fold(
-        errors => Redirect(routes.Application.badpage),
+        errors => Redirect(routes.Application.page),
         value => {
           if (Log.getId(value.id)==true && Log.getPass(value.pass)==true){
            Redirect(routes.Application.page).withSession("connect" -> value.pass)
           }else{
-            Redirect(routes.Application.badpage)
+           Redirect(routes.Application.page)
           }
         }
     )
   }
   
-  def logout = Action {
-    Redirect(routes.Application.login)
+  def logOut() = Action {request =>
+    Redirect(routes.Application.login).withNewSession
   }
 
 }

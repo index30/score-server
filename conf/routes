@@ -10,7 +10,7 @@ GET		/login						controllers.Application.login
 GET		/page						controllers.Application.page
 GET		/badpage					controllers.Application.badpage
 POST	/logAuth					controllers.Application.logAuth
-POST	/logout						controllers.Application.logout
+POST	/logOut						controllers.Application.logOut
 
 
 # Map static resources from the /public folder to the /assets URL path
