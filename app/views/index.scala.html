@@ -1,0 +1,53 @@
+@(taskForm: Form[Log],message: String)(implicit messages: Messages)
+<!-- 上記の(implicit messages: Messages)は必須っぽい -->
+<!-- inputText関数などを使用可能にするhelper._ -->
+@import helper._
+@import views.BootstrapHelper._
+
+@style("Score Server"){
+
+	
+	<div class="jumbotron">
+		<div class="container">
+			<h1>Score of CTF</h1>
+		</div>
+	</div>
+	
+	<div class="col-sm-8">
+	<h2>@message</h2>
+	<div class="well well-lg">
+	Your score is
+	<br>
+	Your ranking is
+	<!-- 今までに解いてきた問題で得たポイントを合計して出力、ランキングも表示 -->
+	</div>
+	
+	<div class="list-group">
+		<a class="list-group-item" href="#">
+			Problem1
+			<span class="badge">10pts</span>
+		</a>
+		<a class="list-group-item" href="#">
+			Problem2
+			<span class="badge">20pts</span>
+		</a>
+		<a class="list-group-item" href="#">
+			Problem3
+			<span class="badge">15pts</span>
+		</a>
+	</div>
+	
+	
+	</div>
+	<div class="col-sm-4">
+	<h2>Login form</h2>
+	@helper.form(action=routes.Application.logAuth()){
+	
+		@helper.inputText(taskForm("id"))
+		@helper.inputPassword(taskForm("pass"))
+		
+		<input type="submit" value="login">	
+	}
+	</div>
+}
+

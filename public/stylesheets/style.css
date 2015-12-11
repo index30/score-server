@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+p.text_left{
+	text-align: left;
+}
+
+p.text_center{
+	text-align: center;
+}
+
+p.text_right{
+	text-align: right;
+}
