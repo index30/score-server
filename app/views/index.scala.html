@@ -1,4 +1,4 @@
-@(taskForm: Form[Log],message: String)(implicit messages: Messages)
+@(taskForm: Form[Log],message: String,login: Boolean)(implicit messages: Messages)
 <!-- 上記の(implicit messages: Messages)は必須っぽい -->
 <!-- inputText関数などを使用可能にするhelper._ -->
 @import helper._
@@ -48,9 +48,11 @@
 		
 		<input type="submit" value="login">	
 	}
-	<h2>Logout</h2>
-	@helper.form(action=routes.Application.logOut()){
-		<input type="submit" value="logout">
+	@if(login==true){
+		<h2>Logout</h2>
+		@helper.form(action=routes.Application.logOut()){
+			<input type="submit" value="logout">
+		}
 	}
 	</div>
 }

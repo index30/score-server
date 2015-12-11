@@ -25,27 +25,24 @@ class Application extends Controller {
       "pass" -> nonEmptyText  
       )(Log.apply)(Log.unapply)
   )
-  
+  var boolog = false
   def index = Action {
     Log.test_create()
     Redirect(routes.Application.login)
   }
   
   def login = Action {
-    Ok(views.html.index(taskForm,"Please login"))
+    Ok(views.html.index(taskForm,"Please login",boolog))
   }
   
   def page = Action.apply { request =>
+    boolog = true
     request.session.get("connect").map{ user =>
-      Ok(views.html.index(taskForm,"Welcome!"))
+      Ok(views.html.index(taskForm,"Welcome!",boolog))
        
     }getOrElse{
-      Ok(views.html.index(taskForm,"Please login again."))
+      Ok(views.html.index(taskForm,"Please login again.",boolog))
     }
-  }
-  
-  def badpage = Action {
-    Ok(views.html.index(taskForm,"Error!"))
   }
     
   def logAuth() = Action { implicit req =>
@@ -62,6 +59,7 @@ class Application extends Controller {
   }
   
   def logOut() = Action {request =>
+    boolog=false
     Redirect(routes.Application.login).withNewSession
   }
 
