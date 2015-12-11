@@ -6,6 +6,8 @@ CREATE SEQUENCE log_id_seq;
 CREATE TABLE user_info (
     id integer NOT NULL DEFAULT nextval('log_id_seq'),
     pass varchar(255),
+    mail varchar(255),
+    point integer,
     PRIMARY KEY(id)
 	);
 	

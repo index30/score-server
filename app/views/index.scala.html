@@ -1,6 +1,5 @@
 @(taskForm: Form[Log],message: String,login: Boolean)(implicit messages: Messages)
-<!-- 上記の(implicit messages: Messages)は必須っぽい -->
-<!-- inputText関数などを使用可能にするhelper._ -->
+
 @import helper._
 @import views.BootstrapHelper._
 
@@ -18,7 +17,6 @@
 	<div class="well well-lg">
 	Your score is
 	<br>
-	Your ranking is
 	<!-- 今までに解いてきた問題で得たポイントを合計して出力、ランキングも表示 -->
 	</div>
 	

@@ -18,36 +18,58 @@ object Log {
   def test_create(){
     DB.withConnection{implicit c =>
       SQL("insert into user_info (id,pass) values({id},{pass})").on(
+          'id -> 4,
+          'pass -> "pass4",
+          'mail -> "4@admin.tes",
+          'point -> 40
+      ).executeInsert()
+    }
+    DB.withConnection{implicit c =>
+      SQL("insert into user_info (id,pass) values({id},{pass})").on(
           'id -> 3,
-          'pass -> "pass3"
+          'pass -> "pass3",
+          'mail -> "3@admin.tes",
+          'point -> 30
       ).executeInsert()
     }
   }
   
-  def getId(i:Int): Boolean = DB.withConnection { implicit c =>
+  def getId(i:Int,count:Int): Boolean = DB.withConnection { implicit c =>
     val result:List[(Int,String)] = SQL("select * from user_info")
     .as(
     int("id") ~ str("pass") map(flatten) *
     )
-    val b = (result(0))._1
-    if (b == i){
-      return true  
-    }else{
+    if (count >= result.length){
       return false
+    }else{
+      var bi = (result(count))._1
+      if (bi == i){
+        return true  
+      }else{
+        return getId(i,(count+1))
+      }
     }
   }
   
-  def getPass(s:String): Boolean = DB.withConnection { implicit c =>
+  def getPass(s:String, count:Int): Boolean = DB.withConnection { implicit c =>
     val result:List[(Int,String)] = SQL("select * from user_info")
     .as(
     int("id") ~ str("pass") map(flatten) *
     )
-    val b = (result(0))._2
-    if (b == s){
-      return true  
+    if (count >= result.length){
+      return false 
     }else{
-      return false
+      var bs = (result(count))._2
+      if (bs == s){
+    	  return true
+      }else{
+    	  return getPass(s,(count+1))
+      }
     }
+  }
+  
+  def returnScore():String = {
+    return "test"
   }
   
   def all(): List[Log] = DB.withConnection { implicit c =>
