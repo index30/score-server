@@ -40,13 +40,15 @@
 	
 	</div>
 	<div class="col-sm-4">
-	<h2>Login form</h2>
-	@helper.form(action=routes.Application.logAuth()){
+	@if(login==false){
+		<h2>Login form</h2>
+		@helper.form(action=routes.Application.logAuth()){
 	
-		@helper.inputText(taskForm("id"))
-		@helper.inputPassword(taskForm("pass"))
+			@helper.inputText(taskForm("id"))
+			@helper.inputPassword(taskForm("pass"))
 		
-		<input type="submit" value="login">	
+			<input type="submit" value="login">	
+		}
 	}
 	@if(login==true){
 		<h2>Logout</h2>

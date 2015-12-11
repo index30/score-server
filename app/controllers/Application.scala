@@ -35,13 +35,11 @@ class Application extends Controller {
     Ok(views.html.index(taskForm,"",boolog))
   }
   
-  def page = Action.apply { request =>
-    boolog = true
+  def page = Action.apply { request =>  
     request.session.get("connect").map{ user =>
-      Ok(views.html.index(taskForm,"Welcome!",boolog))
-       
+      Ok(views.html.index(taskForm,"Welcome!",true)) 
     }getOrElse{
-      Ok(views.html.index(taskForm,"Please login again.",boolog))
+      Ok(views.html.index(taskForm,"Please login again.",false))
     }
   }
     
