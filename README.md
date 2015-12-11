@@ -1,7 +1,7 @@
 Score-server
 ====
 
-Overview
+This is score-server for ctf.
 
 ## Description
-This is score-server for ctf.
+Now, This have only the function of login and logout
