@@ -1,4 +1,4 @@
-@(taskForm: Form[Log],message: String,login: Boolean)(implicit messages: Messages)
+@(taskForm: Form[(Int,String)],message: String,login: Boolean,score: Int)(implicit messages: Messages)
 
 @import helper._
 @import views.BootstrapHelper._
@@ -17,7 +17,7 @@
 	<h2>@message</h2>
 	@if(login==true){
 	<div class="well well-lg">
-	Your score is @Log.returnScore()
+	Your score is @score
 	<br>
 	<!-- 今までに解いてきた問題で得たポイントを合計して出力、ランキングも表示 -->
 	</div>

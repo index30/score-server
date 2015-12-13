@@ -5,30 +5,41 @@ import anorm.SqlParser._
 import play.api.db._
 import play.api.Play.current
 
-case class Log(id: Int, pass:String)
+case class Log(
+    id: Int, 
+    name: String,
+    mail: String,
+    pass:String,
+    point: Int
+    )
 
 object Log {
   val log = {
     get[Int]("id") ~
-    get[String]("pass") map{
-      case id~pass => Log(id, pass)
+    get[String]("name") ~
+    get[String]("mail") ~
+    get[String]("pass") ~
+    get[Int]("point") map{
+      case id~name~mail~pass~point => Log(id,name,mail,pass,point)
     }
   }
   
   def test_create(){
     DB.withConnection{implicit c =>
-      SQL("insert into user_info (id,pass) values({id},{pass})").on(
+      SQL("insert into user_info (id,name,mail,pass,point) values({id},{name},{mail},{pass},{point})").on(
           'id -> 4,
-          'pass -> "pass4",
+          'name -> "takeda",
           'mail -> "4@admin.tes",
+          'pass -> "pass4",
           'point -> 40
       ).executeInsert()
     }
     DB.withConnection{implicit c =>
-      SQL("insert into user_info (id,pass) values({id},{pass})").on(
+      SQL("insert into user_info (id,name,mail,pass,point) values({id},{name},{mail},{pass},{point})").on(
           'id -> 3,
-          'pass -> "pass3",
+          'name -> "take",
           'mail -> "3@admin.tes",
+          'pass -> "pass3",
           'point -> 30
       ).executeInsert()
     }
@@ -68,12 +79,12 @@ object Log {
     }
   }
   
-  def returnScore():Int = DB.withConnection { implicit c =>
-    val result:List[(Int,String)] = SQL("select * from user_info")
+  def returnScore(id:Int): Int = DB.withConnection { implicit c =>
+    val result:List[(String,Int)] = SQL("select * from user_info where id="+id)
     .as(
-    int("id") ~ str("pass") map(flatten) *
+    str("pass") ~ int("point") map(flatten) *
     )
-    return 0
+    return result(0)._2
   }
   
   def all(): List[Log] = DB.withConnection { implicit c =>

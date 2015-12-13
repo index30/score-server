@@ -19,36 +19,37 @@ import play.api.data.validation.Constraints._
 class Application extends Controller {
 
   //Checl of label
-  val taskForm = Form(mapping(
+  val taskForm = Form(tuple(
       "id"   -> number.verifying(min(0), max(9999)),
-      "pass" -> nonEmptyText  
-      )(Log.apply)(Log.unapply)
+      "pass" -> nonEmptyText
+      )
   )
-  var boolog = false
+  var score = 0
   def index = Action {
     Log.test_create()
     Redirect(routes.Application.login)
   }
   
   def login = Action {
-    Ok(views.html.index(taskForm,"",boolog))
+    Ok(views.html.index(taskForm,"",false,score))
   }
   
   def page = Action.apply { request =>  
     request.session.get("connect").map{ user =>
-      Ok(views.html.index(taskForm,"Welcome!",true)) 
+      Ok(views.html.index(taskForm,"Welcome!",true, score)) 
     }getOrElse{
-      Ok(views.html.index(taskForm,"Please login again.",false))
+      Ok(views.html.index(taskForm,"Please login again.",false,score))
     }
   }
-
+  
   def logAuth() = Action { implicit req =>
     taskForm.bindFromRequest.fold(
         errors => Redirect(routes.Application.page),
         value => {
-          val haveId = value.id
-          if (Log.getId(haveId,0)==true && Log.getPass(value.pass,0)==true){
-           Redirect(routes.Application.page).withSession("connect" -> (value.id).toString())
+          val haveId = value._1
+          if (Log.getId(haveId,0)==true && Log.getPass(value._2,0)==true){
+           score = Log.returnScore(value._1)
+           Redirect(routes.Application.page).withSession("connect" -> (value._1).toString())
           }else{
            Redirect(routes.Application.page)
           }
@@ -57,7 +58,6 @@ class Application extends Controller {
   }
   
   def logOut() = Action {request =>
-    boolog=false
     Redirect(routes.Application.login).withNewSession
   }
 
