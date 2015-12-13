@@ -11,6 +11,7 @@ GET		/page						controllers.Application.page
 #GET		/badpage					controllers.Application.badpage
 POST	/logAuth					controllers.Application.logAuth
 POST	/logOut						controllers.Application.logOut
+#POST	/logScore					controllers.Application.logScore
 
 
 # Map static resources from the /public folder to the /assets URL path

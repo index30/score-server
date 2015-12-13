@@ -68,8 +68,12 @@ object Log {
     }
   }
   
-  def returnScore():String = {
-    return "test"
+  def returnScore():Int = DB.withConnection { implicit c =>
+    val result:List[(Int,String)] = SQL("select * from user_info")
+    .as(
+    int("id") ~ str("pass") map(flatten) *
+    )
+    return 0
   }
   
   def all(): List[Log] = DB.withConnection { implicit c =>

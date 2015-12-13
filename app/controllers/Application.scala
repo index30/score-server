@@ -42,14 +42,13 @@ class Application extends Controller {
     }
   }
 
-  
   def logAuth() = Action { implicit req =>
     taskForm.bindFromRequest.fold(
         errors => Redirect(routes.Application.page),
         value => {
           val haveId = value.id
           if (Log.getId(haveId,0)==true && Log.getPass(value.pass,0)==true){
-           Redirect(routes.Application.page).withSession("connect" -> value.pass)
+           Redirect(routes.Application.page).withSession("connect" -> (value.id).toString())
           }else{
            Redirect(routes.Application.page)
           }

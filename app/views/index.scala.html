@@ -2,6 +2,7 @@
 
 @import helper._
 @import views.BootstrapHelper._
+@import models.Log._
 
 @style("Score Server"){
 
@@ -14,11 +15,13 @@
 	
 	<div class="col-sm-8">
 	<h2>@message</h2>
+	@if(login==true){
 	<div class="well well-lg">
-	Your score is
+	Your score is @Log.returnScore()
 	<br>
 	<!-- 今までに解いてきた問題で得たポイントを合計して出力、ランキングも表示 -->
 	</div>
+	}
 	
 	<div class="list-group">
 		<a class="list-group-item" href="#">
