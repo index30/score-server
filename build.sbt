@@ -14,6 +14,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "anorm" % "2.4.0",
   evolutions,
   "org.webjars" % "jquery" % "2.1.3",
+  "org.mindrot" % "jbcrypt" % "0.3m",
   "com.h2database" % "h2" % "1.4.190" // replace `${H2_VERSION}` with an actual version number
 )
 

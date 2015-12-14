@@ -4,6 +4,7 @@ import anorm._
 import anorm.SqlParser._
 import play.api.db._
 import play.api.Play.current
+import org.mindrot.jbcrypt.BCrypt;
 
 case class Log(
     id: Int, 
@@ -30,7 +31,7 @@ object Log {
           'id -> 4,
           'name -> "takeda",
           'mail -> "4@admin.tes",
-          'pass -> "pass4",
+          'pass -> BCrypt.hashpw("pass4",BCrypt.gensalt()),
           'point -> 40
       ).executeInsert()
     }
@@ -39,7 +40,7 @@ object Log {
           'id -> 3,
           'name -> "take",
           'mail -> "3@admin.tes",
-          'pass -> "pass3",
+          'pass -> BCrypt.hashpw("pass3",BCrypt.gensalt()),
           'point -> 30
       ).executeInsert()
     }
@@ -71,7 +72,8 @@ object Log {
       return false 
     }else{
       var bs = (result(count))._2
-      if (bs == s){
+      val str = BCrypt.checkpw(s,bs)
+      if (str){
     	  return true
       }else{
     	  return getPass(s,(count+1))

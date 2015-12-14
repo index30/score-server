@@ -16,9 +16,11 @@ import play.api.db._
 import play.api.Play.current
 import play.api.data.validation.Constraints._
 
+
 class Application extends Controller {
 
-  //Checl of label
+  //Check of id and pass
+  //もし拡張する際はtupleではなくmappingとしたい
   val taskForm = Form(tuple(
       "id"   -> number.verifying(min(0), max(9999)),
       "pass" -> nonEmptyText
