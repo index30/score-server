@@ -79,8 +79,7 @@ object Log {
     	  return getPass(s,(count+1))
       }
     }
-  }
-  
+  } 
   def returnScore(id:Int): Int = DB.withConnection { implicit c =>
     val result:List[(String,Int)] = SQL("select * from user_info where id="+id)
     .as(
@@ -89,6 +88,16 @@ object Log {
     return result(0)._2
   }
   
+  def confirm(value: (Int,String,String,String)) = DB.withConnection{implicit c =>
+    SQL("insert into user_info (id,name,mail,pass,point) values ({id},{name},{mail},{pass},{point})")
+    .on(
+        'id ->value._1,
+        'name->value._2,
+        'mail->value._3,
+        'pass->BCrypt.hashpw(value._4,BCrypt.gensalt()),
+        'point-> 0
+    ).executeInsert()
+  }
   def all(): List[Log] = DB.withConnection { implicit c =>
     SQL("select * from user_info").as(log *)
   }

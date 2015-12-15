@@ -26,6 +26,13 @@ class Application extends Controller {
       "pass" -> nonEmptyText
       )
   )
+  val taskForm1 = Form(tuple(
+      "id"   -> number.verifying(min(0), max(9999)),
+      "name" -> nonEmptyText,
+      "mail" -> nonEmptyText,
+      "pass" -> nonEmptyText
+      )
+  )
   var score = 0
   def index = Action {
     Log.test_create()
@@ -59,7 +66,28 @@ class Application extends Controller {
     )
   }
   
+  def logAdmin() = Action{ req =>
+    Ok(views.html.admin(taskForm1,"Regist now.",false))
+  }
+  
+  def registAd() = Action{ implicit req =>
+    taskForm1.bindFromRequest.fold(
+        errors => Ok(views.html.admin(taskForm1,"Please regist again.",false)),
+        value1 => {
+          //if(Log.confirm(value)){
+          //登録内容確認画面追加予定
+          Log.confirm(value1)
+          score = Log.returnScore(value1._1)
+          Redirect(routes.Application.page).withSession("connect" -> (value1._1).toString)
+          /*}else{
+            Ok(views.html.admin(taskForm1,"Please regist again.",false))
+          }*/
+        }
+    )
+  }
+  
   def logOut() = Action {request =>
+    score = 0
     Redirect(routes.Application.login).withNewSession
   }
 

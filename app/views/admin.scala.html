@@ -1,0 +1,30 @@
+@(taskForm1: Form[(Int,String,String,String)],message: String,login: Boolean)(implicit messages: Messages)
+
+@import helper._
+@import views.BootstrapHelper._
+@import models.Log._
+
+@style("Admin page"){
+
+	
+	<div class="jumbotron">
+		<div class="container">
+			<h1>Admin for CTF Server</h1>
+		</div>
+	</div>
+	
+	<h2>@message</h2>
+
+		<h2>Login form</h2>
+	@helper.form(action=routes.Application.registAd()){
+	
+		@helper.inputText(taskForm1("id"))
+		@helper.inputText(taskForm1("name"))
+		@helper.inputText(taskForm1("mail"))
+		@helper.inputPassword(taskForm1("pass"))
+		
+		<input type="submit" value="regist">	
+	}
+
+	</div>
+}
