@@ -7,10 +7,9 @@ GET     /                           controllers.Application.index
 
 #for login and logout
 GET		/login						controllers.Application.login
+POST	/login					controllers.Application.logAuth
 GET		/page						controllers.Application.page
 #GET		/admin						controllers.Application.admin
-#GET		/badpage					controllers.Application.badpage
-POST	/logAuth					controllers.Application.logAuth
 POST	/logAdmin					controllers.Application.logAdmin
 POST	/logOut						controllers.Application.logOut
 POST	/registAd					controllers.Application.registAd

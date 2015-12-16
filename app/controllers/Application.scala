@@ -36,11 +36,16 @@ class Application extends Controller {
   var score = 0
   def index = Action {
     Log.test_create()
-    Redirect(routes.Application.login)
+    Redirect(routes.Application.login).withNewSession
   }
   
-  def login = Action {
-    Ok(views.html.index(taskForm,"",false,score))
+  def login = Action.apply{ request =>
+    request.session.get("connect").map{ user =>
+      Redirect(routes.Application.page)   
+    }getOrElse{
+      Ok(views.html.index(taskForm,"",false,score)).withNewSession
+    }
+    
   }
   
   def page = Action.apply { request =>  

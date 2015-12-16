@@ -48,18 +48,18 @@
 			@helper.inputText(taskForm("id"))
 			@helper.inputPassword(taskForm("pass"))
 		
-			<input type="submit" value="login">	
+			<button type="submit" class = "btn btn-primary">login</button>	
 		}
 		
 		<h2>Regist page</h2>
 		@helper.form(action=routes.Application.logAdmin()){
-			<input type="submit" value="regist now!">	
+			<button type="submit" class = "btn btn-primary">regist now!</button>
 		}
 	}
 	@if(login==true){
 		<h2>Logout</h2>
 		@helper.form(action=routes.Application.logOut()){
-			<input type="submit" value="logout">
+			<button type="submit" class = "btn btn-primary">logout</button>
 		}
 	}
 	</div>
